@@ -1,6 +1,6 @@
 # Why Redux
 
-![gif](http://g.recordit.co/53HPpuHZ5p.gif)
+![gif](http://g.recordit.co/s2OFw0VtYb.gif)
 
 The code you clone down will have the functionality working as seen above.  
 
