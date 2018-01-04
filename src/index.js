@@ -43,12 +43,25 @@ const reducer = (state = initialState, action) => {
   console.log('-------------------');
   console.log('current state is:', state);
   console.log('action:', action);
-
+  let newValue;
   switch (action.type) {
     case 'INCREMENT':
-      return { count: state.count + action.amount };
+      newValue = { count: state[action.index].count + action.amount };
+      return [
+        ...state.slice(0, action.index),
+        newValue,
+        ...state.slice(action.index + 1)
+      ];
+    // return { count: state.count + action.amount };
     case 'DECREMENT':
-      return { count: state.count - action.amount };
+      console.log();
+      newValue = { count: state[action.index].count - action.amount };
+      return [
+        ...state.slice(0, action.index),
+        newValue,
+        ...state.slice(action.index + 1)
+      ];
+    // return { count: state.count - action.amount };
     default:
       return state;
   }
@@ -66,11 +79,15 @@ store.subscribe(() => {
 // debugger;
 
 class App extends Component {
+  componentWillMount() {
+    store.subscribe(() => this.setState({}));
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
-        {store.getState().map(counter => <Counter />)}
+        {store.getState().map((counter, index) => <Counter index={index} />)}
       </div>
     );
   }
@@ -105,19 +122,17 @@ class Counter extends Component {
   }
 
   increment = amount => {
-    store.dispatch({ type: 'INCREMENT', amount });
-    // this.setState(prevState => ({ count: prevState.count + 1 }));
+    store.dispatch({ type: 'INCREMENT', amount, index: this.props.index });
   };
 
   decrement = amount => {
-    store.dispatch({ type: 'DECREMENT', amount });
-    // this.setState(prevState => ({ count: prevState.count - 1 }));
+    store.dispatch({ type: 'DECREMENT', amount, index: this.props.index });
   };
 
   render() {
     return (
       <div className="Counter">
-        <h1>{0}</h1>
+        <h1>{store.getState()[this.props.index].count}</h1>
         <button onClick={() => this.decrement(1)}> - </button>
         <button onClick={() => this.increment(1)}> + </button>
       </div>
