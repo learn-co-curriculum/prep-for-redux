@@ -5,6 +5,15 @@ import logo from './logo.svg';
 import './App.css';
 import { createStore } from 'redux';
 
+// REMINDER reducers must be pure functions
+// arr = [1,2,3,7,5]
+// [1, 2, 3, 7, 5]
+// arr[3] = 4 X BAD X T-T
+//
+// arr
+// [1, 2, 3, 4, 5]
+// [...arr.slice(0, 3), 7, ...arr.slice(3+1)] GOOD! : )
+
 // const reducer = (state = { count: 0 }, action) => {
 //   console.log('-------------------');
 //   console.log('current state is:', state);
