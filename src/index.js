@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './App.css';
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
 
-const reducer = (state = { count: -97 }, action) => {
+const increment = () => ({ type: 'INCREMENT' });
+
+const reducer = (state = { count: 100 }, action) => {
   console.log('-------------------');
   console.log('current state is:', state);
   console.log('action:', action);
@@ -19,46 +21,41 @@ const reducer = (state = { count: -97 }, action) => {
     default:
       return state;
   }
-
-  return state;
 };
 
-const store = createStore(reducer);
+const myCreateStore = reducer => {
+  let state;
+
+  let functionsThatShouldBeCalledWhenTheStateChanges = [];
+
+  const getState = () => {
+    return state;
+  };
+
+  const dispatch = action => {
+    state = reducer(state, action);
+    functionsThatShouldBeCalledWhenTheStateChanges.forEach(f => f());
+  };
+
+  const subscribe = callback => {
+    functionsThatShouldBeCalledWhenTheStateChanges.push(callback);
+  };
+
+  dispatch({ type: '@@myRedux/INIT' });
+
+  return {
+    getState,
+    dispatch,
+    subscribe
+  };
+};
+
+const store = myCreateStore(reducer);
 
 store.subscribe(() => {
   console.log('the new state is', store.getState());
   console.log('------------------');
 });
-
-// class Counter extends Component {
-//   // state = { count: 0 };
-//   componentWillMount() {
-//     store.subscribe(() => this.setState({}));
-//   }
-//
-//   increment = amount => {
-//     store.dispatch({ type: 'INCREMENT', amount });
-//     // this.setState(prevState => ({ count: prevState.count + 1 }));
-//   };
-//
-//   decrement = amount => {
-//     store.dispatch({ type: 'DECREMENT', amount });
-//     // this.setState(prevState => ({ count: prevState.count - 1 }));
-//   };
-//
-//   render() {
-//     return (
-//       <div className="Counter">
-//         <h1>{store.getState().count}</h1>
-//         <button onClick={() => this.decrement(1)}> - </button>
-//         <button onClick={() => this.increment(1)}> + </button>
-//         <button onClick={() => this.increment(2)}> + 2</button>
-//         <button onClick={() => this.increment(5)}> + 5</button>
-//         {/* <h3>{this.renderDescription()}</h3> */}
-//       </div>
-//     );
-//   }
-// }
 
 ReactDOM.render(
   <Provider store={store}>
