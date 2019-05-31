@@ -1,4 +1,18 @@
 # Why Redux
+# 3 big ideas
+- we will store all of our state in one big js object (state, state tree) _global_
+- to change the state of this object we will send a message that describes how we want to chaneg the state (messages are called actions)
+- to actually change the state we will use a pure fn called a reducer
+(doesnt mutate state, it will always a return a new copy of state. Pure fns have no side effects)
+if you could replace the fn call with the return value, its probably a pure fn
+
+puts 7 + 1
+puts additon(3, 4) + 1
+
+
+Predictable, easy to reason state management tool.
+
+
 
 ![gif](http://g.recordit.co/s2OFw0VtYb.gif)
 
