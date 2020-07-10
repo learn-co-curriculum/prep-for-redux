@@ -1,8 +1,6 @@
-# Why Redux
+# Discussion Questions: Why Redux?
 
 Predictable, easy to reason state management tool.
-
-
 
 ![gif](http://g.recordit.co/s2OFw0VtYb.gif)
 
@@ -16,7 +14,6 @@ Take a look at the current component structure. `App` renders a div with two chi
 
 * Remove the code that calculates and renders the line `The current count is less than <some number>` from the `Counter` component.
 * Add that same description about the current count (feel free to use the same code) **in the `Header` component in place of the text that currently says "Welcome to React"**
-
 
 When lecture begins be prepared to discuss and summarize what you had to do in order to implement this change and why you had to do it.
 
